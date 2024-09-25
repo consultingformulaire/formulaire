@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire d'Éligibilité</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(to right, #2980b9, #6dd5fa, #ffffff);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 90%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .confirmation {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+        /* Style pour la phrase de remboursement */
+    /* Style pour la phrase de remboursement */
+#refundAmount {
+    font-size: 24px; /* Taille de police augmentée */
+    font-weight: bold; /* Texte en gras */
+    color: #2c3e50; /* Couleur du texte */
+    background-color: #f4f6f7; /* Fond contrasté */
+    padding: 15px; /* Espacement intérieur */
+    margin: 20px auto; /* Centre le texte horizontalement avec auto pour la marge */
+    text-align: center; /* Centre le texte */
+    border: 2px solid #3498db; /* Bordure autour du texte */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée légère */
+    max-width: 90%; /* Assure une largeur maximale */
+    overflow: visible; /* Permet au contenu de déborder si nécessaire */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="eligibilityForm">
+            <h2>Vérifiez votre Éligibilité</h2>
+           
+            <!-- Nombre de camions supérieurs ou égaux à 7.5 tonnes -->
+            <div class="form-group">
+                <label for="numCamions">Nombre de camions (≥ 7,5 tonnes) :</label>
+                <input type="number" id="numCamions" min="1" required>
+            </div>
+           
+            <!-- Consommation moyenne aux 100km -->
+            <div class="form-group">
+                <label for="consommationMoyenne">Consommation moyenne aux 100km (en litres) :</label>
+                <input type="number" id="consommationMoyenne" min="0" step="0.1" required>
+            </div>
+           
+            <!-- Liste déroulante pour le nombre de km parcourus par an -->
+            <div class="form-group">
+                <label for="kmAn">Nombre de km parcourus par an :</label>
+                <select id="kmAn" required>
+                    <option value="15000">0-15000</option>
+                    <option value="30000">15001-30000</option>
+                    <option value="45000">30001-45000</option>
+                    <option value="60000">45001-60000</option>
+                    <option value="75000">60001-75000</option>
+                    <option value="100000">+75000</option>
+                </select>
+            </div>
+           
+            <!-- Nombre d'années de possession des camions -->
+            <div class="form-group">
+                <label for="anneesPossession">Nombre d'années de possession du/des camions :</label>
+                <input type="number" id="anneesPossession" min="1" required>
+            </div> 
+           
+            <!-- Bouton Valider -->
+            <button type="button" class="btn" onclick="handleSubmit()">Valider</button>
+        </form>
+
+        <div id="eligibilityResult" class="confirmation" style="display: none;">
+            <p id="refundAmount"></p>
+           
+            <form id="leadForm" onsubmit="sendEmail(); return false;">
+                <!-- Nom -->
+                <div class="form-group">
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" required>
+                </div>
+               
+                <!-- Prénom -->
+                <div class="form-group">
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" id="prenom" required>
+                </div>
+               
+
+               
+                <!-- Numéro -->
+                <div class="form-group">
+                    <label for="numero">Téléphone :</label>
+                    <input type="text" id="numero" required>
+                </div>
+               
+                <!-- Siren -->
+                <div class="form-group">
+                    <label for="nomsoc">Nom de la société :</label>
+                    <input type="text" id="nomsoc" required>
+                </div>
+                              <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" required>
+                </div>
+               
+                <!-- Bouton Envoyer -->
+                <button type="submit" class="btn">Envoyer</button>
+            </form>
+        </div>
+
+        <!-- Confirmation d'envoi -->
+        <div id="sendConfirmation" class="confirmation" style="display: none;">
+            <p>Une équipe va vous contacter prochainement.</p>
+        </div>
+    </div>
+
+    <!-- Include EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("TLtIkodHKaS61LSNh"); // Remplacez par votre User ID EmailJS
+        })();
+
+        function handleSubmit() {
+            var form = document.getElementById('eligibilityForm');
+            // Vérifie la validité du formulaire
+            if (form.checkValidity()) {
+                calculateRefund();
+            } else {
+                form.reportValidity(); // Affiche les messages d'erreur de validation
+            }
+        }
+
+        function calculateRefund() {
+            // Récupération des valeurs des champs
+            var numCamions = document.getElementById('numCamions').value;
+            var consommationMoyenne = document.getElementById('consommationMoyenne').value;
+            var anneesPossession = document.getElementById('anneesPossession').value;
+            var kmAn = document.getElementById('kmAn').value;
+
+            // Calcul du montant obtenu
+            var obtenu = consommationMoyenne * numCamions * anneesPossession * kmAn * 0.0025;
+           
+            // Affichage du résultat
+            document.getElementById('refundAmount').innerHTML = "L'administration fiscale peut vous rembourser jusqu'à <strong>" + obtenu.toFixed(2) + " euros</strong>.";
+           
+            document.getElementById('eligibilityForm').style.display = 'none';
+            document.getElementById('eligibilityResult').style.display = 'block';
+        }
+
+        function sendEmail() {
+            var templateParams = {
+                numCamions: document.getElementById('numCamions').value,
+                consommationMoyenne: document.getElementById('consommationMoyenne').value,
+                kmAn: document.getElementById('kmAn').value,
+                anneesPossession: document.getElementById('anneesPossession').value,
+                nom: document.getElementById('nom').value,
+                prenom: document.getElementById('prenom').value,
+                email: document.getElementById('email').value,
+                numero: document.getElementById('numero').value,
+                nomsoc: document.getElementById('nomsoc').value
+            };
+
+            emailjs.send('service_4m8xdkj', "template_jlpbvdr", templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    document.getElementById('eligibilityResult').style.display = 'none';
+                    document.getElementById('sendConfirmation').style.display = 'block';
+                }, function(error) {
+                    console.log('FAILED...', error);
+                });
+        }
+    </script>
+
+</body>
+</html>
