@@ -15,9 +15,29 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+        }
+
+        header {
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
         }
 
         .form-container {
@@ -81,113 +101,135 @@
             font-size: 18px;
             font-family: 'Roboto', sans-serif;
         }
-        /* Style pour la phrase de remboursement */
-    /* Style pour la phrase de remboursement */
-#refundAmount {
-    font-size: 24px; /* Taille de police augmentée */
-    font-weight: bold; /* Texte en gras */
-    color: #2c3e50; /* Couleur du texte */
-    background-color: #f4f6f7; /* Fond contrasté */
-    padding: 8px; /* Espacement intérieur */
-    margin: 10px auto; /* Centre le texte horizontalement avec auto pour la marge */
-    margin-top: 20%;/**/
-    text-align: center; /* Centre le texte */
-    border: 2px solid #3498db; /* Bordure autour du texte */
-    border-radius: 8px; /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée légère */
-    max-width: 90%; /* Assure une largeur maximale */
-    overflow: visible; /* Permet au contenu de déborder si nécessaire */
-}
 
+        #refundAmount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            background-color: #f4f6f7;
+            padding: 8px;
+            margin: 10px auto;
+            margin-top: 20%;
+            text-align: center;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            overflow: visible;
+        }
 
+        /* Mentions légales */
+        .mentions-legales {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 20px;
+            text-align: center;
+        }
 
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <form id="eligibilityForm">
-            <h2>Vérifiez votre Éligibilité</h2>
-           
-            <!-- Nombre de camions supérieurs ou égaux à 7.5 tonnes -->
-            <div class="form-group">
-                <label for="numCamions">Nombre de camions (≥ 7,5 tonnes) :</label>
-                <input type="number" id="numCamions" min="1" required>
-            </div>
-           
-            <!-- Consommation moyenne aux 100km -->
-            <div class="form-group">
-                <label for="consommationMoyenne">Consommation moyenne aux 100km (en litres) :</label>
-                <input type="number" id="consommationMoyenne" min="0" step="0.1" required>
-            </div>
-           
-            <!-- Liste déroulante pour le nombre de km parcourus par an -->
-            <div class="form-group">
-                <label for="kmAn">Nombre de km parcourus par an :</label>
-                <select id="kmAn" required>
-                    <option value="15000">0-15000</option>
-                    <option value="30000">15001-30000</option>
-                    <option value="45000">30001-45000</option>
-                    <option value="60000">45001-60000</option>
-                    <option value="75000">60001-75000</option>
-                    <option value="100000">+75000</option>
-                </select>
-            </div>
-           
-            <!-- Nombre d'années de possession des camions -->
-            <div class="form-group">
-                <label for="anneesPossession">Nombre d'années de possession du/des camions :</label>
-                <input type="number" id="anneesPossession" min="1" required>
-            </div> 
-           
-            <!-- Bouton Valider -->
-            <button type="button" class="btn" onclick="handleSubmit()">Valider</button>
-        </form>
 
-        <div id="eligibilityResult" class="confirmation" style="display: none;">
-            <p id="refundAmount"></p>
-           
-            <form id="leadForm" onsubmit="sendEmail(); return false;">
-                <!-- Nom -->
-                <div class="form-group">
-                    <label for="nom">Nom :</label>
-                    <input type="text" id="nom" required>
-                </div>
-               
-                <!-- Prénom -->
-                <div class="form-group">
-                    <label for="prenom">Prénom :</label>
-                    <input type="text" id="prenom" required>
-                </div>
-               
+    <!-- Header -->
+    <header>
+        <h1>Vérification d'Éligibilité au Remboursement</h1>
+    </header>
 
+    <!-- Main container for form -->
+    <div class="container">
+        <div class="form-container">
+            <form id="eligibilityForm">
+                <h2>Vérifiez votre Éligibilité</h2>
                
-                <!-- Numéro -->
+                <!-- Nombre de camions supérieurs ou égaux à 7.5 tonnes -->
                 <div class="form-group">
-                    <label for="numero">Téléphone :</label>
-                    <input type="text" id="numero" required>
+                    <label for="numCamions">Nombre de camions (≥ 7,5 tonnes) :</label>
+                    <input type="number" id="numCamions" min="1" required>
                 </div>
                
-                <!-- Siren -->
+                <!-- Consommation moyenne aux 100km -->
                 <div class="form-group">
-                    <label for="nomsoc">Nom de la société :</label>
-                    <input type="text" id="nomsoc" required>
-                </div>
-                              <!-- Email -->
-                <div class="form-group">
-                    <label for="email">Email :</label>
-                    <input type="email" id="email" required>
+                    <label for="consommationMoyenne">Consommation moyenne aux 100km (en litres) :</label>
+                    <input type="number" id="consommationMoyenne" min="0" step="0.1" required>
                 </div>
                
-                <!-- Bouton Envoyer -->
-                <button type="submit" class="btn">Envoyer</button>
+                <!-- Liste déroulante pour le nombre de km parcourus par an -->
+                <div class="form-group">
+                    <label for="kmAn">Nombre de km parcourus par an :</label>
+                    <select id="kmAn" required>
+                        <option value="15000">0-15000</option>
+                        <option value="30000">15001-30000</option>
+                        <option value="45000">30001-45000</option>
+                        <option value="60000">45001-60000</option>
+                        <option value="75000">60001-75000</option>
+                        <option value="100000">+75000</option>
+                    </select>
+                </div>
+               
+                <!-- Nombre d'années de possession des camions -->
+                <div class="form-group">
+                    <label for="anneesPossession">Nombre d'années de possession du/des camions :</label>
+                    <input type="number" id="anneesPossession" min="1" required>
+                </div> 
+               
+                <!-- Bouton Valider -->
+                <button type="button" class="btn" onclick="handleSubmit()">Valider</button>
             </form>
-        </div>
 
-        <!-- Confirmation d'envoi -->
-        <div id="sendConfirmation" class="confirmation" style="display: none;">
-            <p>Une équipe va vous contacter prochainement.</p>
+            <div id="eligibilityResult" class="confirmation" style="display: none;">
+                <p id="refundAmount"></p>
+               
+                <form id="leadForm" onsubmit="sendEmail(); return false;">
+                    <!-- Nom -->
+                    <div class="form-group">
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" required>
+                    </div>
+                   
+                    <!-- Prénom -->
+                    <div class="form-group">
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" id="prenom" required>
+                    </div>
+                   
+                    <!-- Téléphone -->
+                    <div class="form-group">
+                        <label for="numero">Téléphone :</label>
+                        <input type="text" id="numero" required>
+                    </div>
+                   
+                    <!-- Nom de la société -->
+                    <div class="form-group">
+                        <label for="nomsoc">Nom de la société :</label>
+                        <input type="text" id="nomsoc" required>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email :</label>
+                        <input type="email" id="email" required>
+                    </div>
+                   
+                    <!-- Bouton Envoyer -->
+                    <button type="submit" class="btn">Envoyer</button>
+                </form>
+            </div>
+
+            <!-- Confirmation d'envoi -->
+            <div id="sendConfirmation" class="confirmation" style="display: none;">
+                <p>Une équipe va vous contacter prochainement.</p>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Votre Entreprise - Tous droits réservés</p>
+        <div class="mentions-legales">
+            <p>Conformément à la réglementation sur la protection des données, vos informations personnelles ne seront utilisées que pour vous contacter dans le cadre de cette demande.</p>
+            <p>Pour plus d'informations sur le traitement de vos données personnelles, consultez notre <a href="#" style="color: #3498db;">politique de confidentialité</a>.</p>
+        </div>
+    </footer>
 
     <!-- Include EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -198,25 +240,21 @@
 
         function handleSubmit() {
             var form = document.getElementById('eligibilityForm');
-            // Vérifie la validité du formulaire
             if (form.checkValidity()) {
                 calculateRefund();
             } else {
-                form.reportValidity(); // Affiche les messages d'erreur de validation
+                form.reportValidity();
             }
         }
 
         function calculateRefund() {
-            // Récupération des valeurs des champs
             var numCamions = document.getElementById('numCamions').value;
             var consommationMoyenne = document.getElementById('consommationMoyenne').value;
             var anneesPossession = document.getElementById('anneesPossession').value;
             var kmAn = document.getElementById('kmAn').value;
 
-            // Calcul du montant obtenu
             var obtenu = consommationMoyenne * numCamions * anneesPossession * kmAn * 0.0025;
            
-            // Affichage du résultat
             document.getElementById('refundAmount').innerHTML = "L'administration fiscale peut vous rembourser jusqu'à <strong>" + obtenu + " euros</strong>.";
            
             document.getElementById('eligibilityForm').style.display = 'none';
