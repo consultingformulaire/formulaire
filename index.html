@@ -126,6 +126,13 @@
             text-align: center;
         }
 
+        /* Style pour mettre en évidence la bonne nouvelle */
+        .bonne-nouvelle {
+            color: #27ae60;
+            font-weight: bold;
+            font-style: italic;
+        }
+
     </style>
 </head>
 <body>
@@ -255,7 +262,7 @@
 
             var obtenu = consommationMoyenne * numCamions * anneesPossession * kmAn * 0.0025;
            
-            document.getElementById('refundAmount').innerHTML = "L'administration fiscale peut vous rembourser jusqu'à <strong>" + obtenu + " euros</strong>.";
+            document.getElementById('refundAmount').innerHTML = "<span class='bonne-nouvelle'>Bonne nouvelle</span>, l'administration fiscale peut vous rembourser jusqu'à <strong>" + obtenu + " €</strong>.";
            
             document.getElementById('eligibilityForm').style.display = 'none';
             document.getElementById('eligibilityResult').style.display = 'block';
