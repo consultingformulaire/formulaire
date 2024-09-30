@@ -197,54 +197,34 @@
                     <label for="anneesPossession">Nombre d'années de possession du/des camions :</label>
                     <input type="number" id="anneesPossession" min="1" required>
                 </div> 
-               
-                <!-- Bouton Valider -->
-                <button type="button" class="btn" onclick="sendEmail2();handleSubmit();">Valider</button>
-            </form>
-
-            <div id="eligibilityResult" class="confirmation" style="display: none;">
-                <p id="refundAmount"></p>
-               
-                <form id="leadForm" onsubmit="sendEmail(); return false;">
-                    <!-- Nom -->
-                    <div class="form-group">
-                        <label for="nom">Nom :</label>
+		<div class="form-group">
+                        <label for="nom">Nom & prénom :</label>
                         <input type="text" id="nom" required>
                     </div>
-                   
-                    <!-- Prénom -->
-                    <div class="form-group">
-                        <label for="prenom">Prénom :</label>
-                        <input type="text" id="prenom" required>
-                    </div>
-                   
-                    <!-- Téléphone -->
+                 <!-- Téléphone -->
                     <div class="form-group">
                         <label for="numero">Téléphone :</label>
                         <input type="text" id="numero" required>
                     </div>
-                   
-                    <!-- Nom de la société -->
-                    <div class="form-group">
-                        <label for="nomsoc">Nom de la société :</label>
-                        <input type="text" id="nomsoc" required>
-                    </div>
-                    
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email">Email :</label>
                         <input type="email" id="email" required>
                     </div>
-                   
-                    <!-- Bouton Envoyer -->
-                    <button type="submit" class="btn">Envoyer</button>
-                </form>
-            </div>
+                <!-- Bouton Valider -->
+                <button type="button" class="btn" onclick="sendEmail();handleSubmit();">Valider</button>
+            </form>
 
-            <!-- Confirmation d'envoi -->
+            <div id="eligibilityResult" class="confirmation" style="display: none;">
+                <p id="refundAmount"></p>
+                           <!-- Confirmation d'envoi -->
             <div id="sendConfirmation" class="confirmation" style="display: none;">
                 <p>Notre équipe vous contactera prochainement.</p>
             </div>
+                </form>
+            </div>
+
+
         </div>
     </div>
 
@@ -285,7 +265,7 @@
           document.getElementById('refundAmount').innerHTML = "<span class='bonne-nouvelle'>Bonne nouvelle</span>, votre remboursement potentiel auprès de l'administration fiscale est de <span class='montant-clignotant'>" + obtenu + ' €</span>';
 
             document.getElementById('eligibilityForm').style.display = 'none';
-            document.getElementById('eligibilityResult').style.display = 'block';
+            
         }
 
         function sendEmail() {
@@ -295,36 +275,20 @@
                 kmAn: document.getElementById('kmAn').value,
                 anneesPossession: document.getElementById('anneesPossession').value,
                 nom: document.getElementById('nom').value,
-                prenom: document.getElementById('prenom').value,
                 email: document.getElementById('email').value,
-                numero: document.getElementById('numero').value,
-                nomsoc: document.getElementById('nomsoc').value
+                numero: document.getElementById('numero').value
             };
       
             emailjs.send('service_4m8xdkj', "template_jlpbvdr", templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
-                    document.getElementById('eligibilityResult').style.display = 'none';
+		    document.getElementById('eligibilityResult').style.display = 'block';
                     document.getElementById('sendConfirmation').style.display = 'block';
                 }, function(error) {
                     console.log('FAILED...', error);
                 });
         }
-        function sendEmail2() {
-            var templateParams = {
-                numCamions: document.getElementById('numCamions').value,
-                consommationMoyenne: document.getElementById('consommationMoyenne').value,
-                kmAn: document.getElementById('kmAn').value,
-                anneesPossession: document.getElementById('anneesPossession').value,
-                 email: "pas encore connu"
-            };
-             emailjs.send('service_4m8xdkj', "template_jlpbvdr", templateParams)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                }, function(error) {
-                    console.log('FAILED...', error);
-                });
-        }
+      
     </script>
 
 </body>
