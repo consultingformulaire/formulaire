@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire d'Éligibilité ! </title>
+    <title>Formulaire d'Éligibilité !</title>
     <!-- Google Fonts -->
     <link rel="icon" type="image/jpg" href="4znvBB.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -98,7 +98,12 @@
             font-family: 'Roboto', sans-serif;
         }
 
-        .btn:hover {
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn:hover:not(:disabled) {
             background-color: #2980b9;
         }
 
@@ -125,7 +130,6 @@
             overflow: visible;
         }
 
-        /* Mentions légales */
         .mentions-legales {
             font-size: 12px;
             color: #7f8c8d;
@@ -133,20 +137,18 @@
             text-align: center;
         }
 
-        /* Style pour mettre en évidence la bonne nouvelle */
         .bonne-nouvelle {
             color: #27ae60;
             font-weight: bold;
             font-style: italic;
         }
-        /* Animation pour clignoter */
+
         @keyframes clignoter {
             0% { opacity: 1; }
             50% { opacity: 0; }
             100% { opacity: 1; }
         }
 
-        /* Appliquer l'animation uniquement au montant */
         .montant-clignotant {
             color: red;
             animation: clignoter 1s infinite;
@@ -156,30 +158,25 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <h1>Vérification d'Éligibilité au Remboursement</h1>
     </header>
 
-    <!-- Main container for form -->
     <div class="container">
         <div class="form-container">
             <form id="eligibilityForm">
                 <h2>Vérifiez votre Éligibilité</h2>
                
-                <!-- Nombre de camions supérieurs ou égaux à 7.5 tonnes -->
                 <div class="form-group">
                     <label for="numCamions">Nombre de camions (≥ 7,5 tonnes) :</label>
                     <input type="number" id="numCamions" min="1" required>
                 </div>
                
-                <!-- Consommation moyenne aux 100km -->
                 <div class="form-group">
                     <label for="consommationMoyenne">Consommation moyenne aux 100km (en litres) :</label>
                     <input type="number" id="consommationMoyenne" min="0" step="0.1" required>
                 </div>
                
-                <!-- Liste déroulante pour le nombre de km parcourus par an -->
                 <div class="form-group">
                     <label for="kmAn">Nombre de km parcourus par an :</label>
                     <select id="kmAn" required>
@@ -192,43 +189,38 @@
                     </select>
                 </div>
                
-                <!-- Nombre d'années de possession des camions -->
                 <div class="form-group">
                     <label for="anneesPossession">Nombre d'années de possession du/des camions :</label>
                     <input type="number" id="anneesPossession" min="1" required>
                 </div> 
-		<div class="form-group">
-                        <label for="nom">Nom & prénom :</label>
-                        <input type="text" id="nom" required>
-                    </div>
-                 <!-- Téléphone -->
-                    <div class="form-group">
-                        <label for="numero">Téléphone :</label>
-                        <input type="text" id="numero" required>
-                    </div>
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="email">Email :</label>
-                        <input type="email" id="email" required>
-                    </div>
-                <!-- Bouton Valider -->
-                <button type="button" class="btn" onclick="sendEmail();handleSubmit();">Valider</button>
+                <div class="form-group">
+                    <label for="nom">Nom & prénom :</label>
+                    <input type="text" id="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="numero">Téléphone :</label>
+                    <input type="text" id="numero" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <button type="button" id="submitButton" class="btn" onclick="sendEmail();handleSubmit();" disabled>Valider</button>
             </form>
 
             <div id="eligibilityResult" class="confirmation" style="display: none;">
                 <p id="refundAmount"></p>
-                           <!-- Confirmation d'envoi -->
+            </div>
+
             <div id="sendConfirmation" class="confirmation" style="display: none;">
                 <p>Notre équipe vous contactera prochainement.</p>
             </div>
-                </form>
-            </div>
-
-
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2024 W Consulting - Tous droits réservés</p>
         <div class="mentions-legales">
@@ -237,7 +229,6 @@
         </div>
     </footer>
 
-    <!-- Include EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         (function(){
@@ -260,12 +251,9 @@
             var kmAn = document.getElementById('kmAn').value;
 
             var obtenu = consommationMoyenne * numCamions * anneesPossession * kmAn * 0.0025;
-           
-
-          document.getElementById('refundAmount').innerHTML = "<span class='bonne-nouvelle'>Bonne nouvelle</span>, votre remboursement potentiel auprès de l'administration fiscale est de <span class='montant-clignotant'>" + obtenu + ' €</span>';
+            document.getElementById('refundAmount').innerHTML = "<span class='bonne-nouvelle'>Bonne nouvelle</span>, votre remboursement potentiel auprès de l'administration fiscale est de <span class='montant-clignotant'>" + obtenu + ' €</span>';
 
             document.getElementById('eligibilityForm').style.display = 'none';
-            
         }
 
         function sendEmail() {
@@ -282,13 +270,20 @@
             emailjs.send('service_4m8xdkj', "template_jlpbvdr", templateParams)
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
-		    document.getElementById('eligibilityResult').style.display = 'block';
+                    document.getElementById('eligibilityResult').style.display = 'block';
                     document.getElementById('sendConfirmation').style.display = 'block';
                 }, function(error) {
                     console.log('FAILED...', error);
                 });
         }
-      
+
+        // Enable the submit button only when all fields are filled
+        document.querySelectorAll('#eligibilityForm input, #eligibilityForm select').forEach(function(input) {
+            input.addEventListener('input', function() {
+                const allFilled = Array.from(document.querySelectorAll('#eligibilityForm input, #eligibilityForm select')).every(field => field.value);
+                document.getElementById('submitButton').disabled = !allFilled;
+            });
+        });
     </script>
 
 </body>
